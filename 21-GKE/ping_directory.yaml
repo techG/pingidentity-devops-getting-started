@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pingdirectory
+  labels:
+    app: pingdirectory
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pingdirectory
+  template:
+    metadata:
+      labels:
+        app: pingdirectory
+    spec:
+      containers:
+        - image: pingidentity/pingdirectory
+          name: pingdirectory
+          env:
+            - name: pingdirectory_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pd
+                  key: password
+            - name: SERVER_PROFILE_URL
+              value: https://github.com/pingidentity/server-profile-pingdirectory-full-featured.git
+          ports:
+            - containerPort: 636
+              name: pingdirectory
+            - containerPort: 443
+              name: https
+          volumeMounts:
+            - name: pingdirectory-persistent-storage
+              mountPath: /opt/out
+      volumes:
+        - name: pingdirectory-persistent-storage
+          persistentVolumeClaim:
+            claimName: pingdirectory-volumeclaim
