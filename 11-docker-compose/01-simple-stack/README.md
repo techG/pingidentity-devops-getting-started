@@ -15,7 +15,7 @@ View container logs with:
 `docker-compose logs`
 
 ## Using the containers
-At this poing you should see docker-compose create the services for a PingFederate instance and a PingDirectory instance.  Note that
+At this point you should see docker-compose create the services for a PingFederate instance and a PingDirectory instance.  Note that
 these services are started up in the foreground.  Upon exiting (ctrl-C), the services will be stopped.
 
 Once the PingDirectory instance is up, 
